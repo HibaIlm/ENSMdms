@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Brand colors per role space ── */
+  --color-enseignant: #17748A;
+  --color-directrice: #1F3864;
+  --color-csd:        #4B0082;
+
+  /* ── Dossier status colors ── */
+  --color-status-soumis:      #9CA3AF;
+  --color-status-evaluation:  #F97316;
+  --color-status-accepte:     #22C55E;
+  --color-status-refuse:      #EF4444;
+  --color-status-corrections: #EAB308;
+
+  /* ── Page background colors (one per role space) ── */
+  /* Use bg-page-enseignant, bg-page-directrice, bg-page-csd in layouts */
+  --color-page-enseignant: #F0F7F9;
+  --color-page-directrice: #F4F6FB;
+  --color-page-csd:        #F5F0FF;
+
+  /* ── Evaluation statut backgrounds (CSD pages) ── */
+  --color-eval-non-evalue-bg:  #F3F4F6;
+  --color-eval-en-cours-bg:    #FFF7ED;
+  --color-eval-evalue-bg:      #F0FDF4;
+
+  /* ── CSD role badge backgrounds ── */
+  --color-csd-role-validation-bg:    #D1FAE5;
+  --color-csd-role-validation-text:  #059669;
+  --color-csd-role-consultation-bg:  #EDE9FE;
+  --color-csd-role-consultation-text: #7C3AED;
+
+  /* ── Neutral ── */
+  --color-border-default: #E5E7EB;
+  --color-text-muted:     #9CA3AF;
+}

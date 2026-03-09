@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import {
   messagesService,
   type Conversation,
-  type Message,
 } from '../services/messagesService'
 
 // ── Types ─────────────────────────────────────────────────────────────────────

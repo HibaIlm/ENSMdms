@@ -7,7 +7,7 @@ import {
 import NavbarCSD from '../../components/NavbarCSD'
 import { useDossiersAssignes } from '../../hooks/useDossiersAssignes'
 import { useAuth } from '../../hooks/useAuth'
-import { STATUT_CONFIG, CATEGORIE_CONFIG } from '../../constants/dossierConfig'
+import { CATEGORIE_CONFIG } from '../../constants/dossierConfig'
 import type { DossierAssigne, EvaluationStatut } from '../../services/dossiersAssignesService'
 import type { Categorie, CSDRole } from '../../types'
 

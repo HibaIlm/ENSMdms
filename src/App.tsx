@@ -23,7 +23,7 @@ import DirectriceLayout from './layouts/DirectriceLayout'
 import CSDLayout from './layouts/CSDLayout'
 
 // Auth store
-import { useAuthStore, MOCK_USERS, MOCK_DEV_PROFILES } from './store/authStore'
+import { useAuthStore, MOCK_DEV_PROFILES } from './store/authStore'
 
 // ── Dev role switcher ─────────────────────────────────────────────────────────
 // Floating panel — dev only, hidden in production (import.meta.env.PROD).

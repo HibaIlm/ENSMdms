@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  FolderOpen, Users, Clock, CheckCircle2, XCircle, AlertCircle,
+  FolderOpen, Users, Clock, CheckCircle2, AlertCircle,
   ArrowRight, TrendingUp, Bell, RefreshCw, FileText, Shield,
   ChevronRight, BarChart3, Calendar, Layers, Loader2,
 } from 'lucide-react'

@@ -1,5 +1,4 @@
 import { useAuthStore, type AuthUser } from '../store/authStore'
-import { authService } from '../services/authService'
 import type { Role } from '../types'
 
 // ── Types ─────────────────────────────────────────────────────────────────────

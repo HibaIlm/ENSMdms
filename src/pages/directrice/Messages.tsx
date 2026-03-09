@@ -378,7 +378,6 @@ function MessageThread({
 function MessageBubble({
   message,
   showDateSeparator,
-  previousTimestamp,
 }: {
   message: Message
   showDateSeparator: boolean

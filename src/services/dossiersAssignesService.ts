@@ -1,4 +1,4 @@
-import type { Dossier, Categorie, CSDRole } from '../types'
+import type { Dossier, Categorie } from '../types'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

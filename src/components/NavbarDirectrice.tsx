@@ -2,48 +2,46 @@ import {
   LayoutDashboard, FolderOpen, Users, ShieldCheck,
   MessageSquare, GraduationCap,
 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import BaseNavbar from './BaseNavbar'
+import { useAuth } from '../hooks/useAuth'
+import { useNotificationStore } from '../store/notificationStore'
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// ── Nav items factory — reads badge counts from notification store ─────────────
+// Counts come from notificationStore (global, fetched once in App.tsx).
+// Never passed as props — so badges are consistent on every page.
 
-interface NavbarDirectriceProps {
-  nomDirectrice?: string
-  messagesNonLus?: number
-  comptesEnAttente?: number
-  onSwitchToEnseignante?: () => void
-  onLogout?: () => void
+function buildNavItems(messagesNonLus: number, comptesEnAttente: number) {
+  return [
+    { label: 'Tableau de bord', to: '/dashboard',        icon: LayoutDashboard },
+    { label: 'Dossiers',        to: '/admin/dossiers',   icon: FolderOpen },
+    { label: 'Comptes',         to: '/admin/users',      icon: Users,         badge: comptesEnAttente },
+    { label: 'Rôles CSD',       to: '/admin/csd-roles',  icon: ShieldCheck },
+    { label: 'Messages',        to: '/admin/messages',   icon: MessageSquare, badge: messagesNonLus },
+  ]
 }
-
-// ── Nav config — single source of truth for Directrice navigation ─────────────
-
-const NAV_ITEMS = (messagesNonLus: number, comptesEnAttente: number) => [
-  { label: 'Tableau de bord', to: '/dashboard',        icon: LayoutDashboard },
-  { label: 'Dossiers',        to: '/admin/dossiers',   icon: FolderOpen },
-  { label: 'Comptes',         to: '/admin/users',      icon: Users,         badge: comptesEnAttente },
-  { label: 'Rôles CSD',       to: '/admin/csd-roles',  icon: ShieldCheck },
-  { label: 'Messages',        to: '/admin/messages',   icon: MessageSquare, badge: messagesNonLus },
-]
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function NavbarDirectrice({
-  nomDirectrice = 'Directrice',
-  messagesNonLus = 0,
-  comptesEnAttente = 0,
   onSwitchToEnseignante,
-  onLogout,
-}: NavbarDirectriceProps) {
+}: {
+  onSwitchToEnseignante?: () => void
+}) {
+  const navigate = useNavigate()
+  const { fullName } = useAuth()
+  const { messagesNonLus, comptesEnAttente } = useNotificationStore()
+
   return (
     <BaseNavbar
       logoIcon={GraduationCap}
       logoTitle="Direction Doctorale"
       logoSubtitle="Administration"
-      navItems={NAV_ITEMS(messagesNonLus, comptesEnAttente)}
-      displayName={nomDirectrice}
+      navItems={buildNavItems(messagesNonLus, comptesEnAttente)}
+      displayName={fullName}
       roleLabel="Directrice"
       bgClass="bg-directrice"
       activeTextClass="text-directrice"
-      onLogout={onLogout}
       rightSlot={
         onSwitchToEnseignante ? (
           <button

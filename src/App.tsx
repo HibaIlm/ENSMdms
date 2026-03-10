@@ -9,13 +9,25 @@ import Register from './pages/auth/Register'
 // Pages — Directrice
 import DashboardDirectrice from './pages/directrice/Dashboard'
 import DirectriceMessages from './pages/directrice/Messages'
+// ↓ From App.js (Page04, Page07) — not yet in App.tsx
+import GestionComptes from './pages/directrice/Page04_GestionComptes'
+import DetailDossierDirectrice from './pages/directrice/Page07_DetailDossierDirectrice'
 
 // Pages — Enseignant
 import MesDossiers from './pages/enseignant/MesDossiers'
+// ↓ From App.js — replacing <div> placeholders
+import EnseignantDashboard from './pages/enseignant/Page09_EnseignantDashboard'
+import NouveauDepot from './pages/enseignant/Page10_NouveauDepot'
+import DetailDossierEnseignant from './pages/enseignant/Page12_DetailDossierEnseignant'
+import MonProfil from './pages/enseignant/Page13_MonProfil'
 
 // Pages — CSD
 import CSDDashboard from './pages/csd/Dashboard'
 import DossiersAssignes from './pages/csd/DossiersAssignes'
+
+// Pages — Errors
+// ↓ From App.js — replaces the bare <Navigate> fallback for 403
+import { ErrorPage } from './pages/enseignant/Page18_ErrorPages'
 
 // Layouts
 import EnseignantLayout from './layouts/EnseignantLayout'
@@ -55,8 +67,7 @@ function DevRoleSwitcher() {
 
       <div className="flex flex-col gap-1">
         {MOCK_DEV_PROFILES.map((profile) => {
-          const isActive =
-            user?.id === profile.user.id
+          const isActive = user?.id === profile.user.id
           return (
             <button
               key={profile.user.id}
@@ -66,7 +77,6 @@ function DevRoleSwitcher() {
               }`}
               style={{
                 backgroundColor: profile.color,
-                // ring color matches button color for active state
                 ...(isActive ? { outlineColor: profile.color } : {}),
               }}
             >
@@ -78,10 +88,6 @@ function DevRoleSwitcher() {
     </div>
   )
 }
-
-// ── Login redirect ────────────────────────────────────────────────────────────
-// Temporary placeholder — redirects based on current mock role.
-// Replace with a real Login page component when backend is ready.
 
 // ── Login page placeholder ────────────────────────────────────────────────────
 // Replace this entire component with a real <Login /> page when backend is ready.
@@ -152,24 +158,29 @@ export default function App() {
         {/* ── Public ── */}
         <Route path="/login" element={<LoginRedirect />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/403" element={<ErrorPage type="403" />} />
 
         {/* ── Directrice ── */}
         <Route element={<ProtectedRoute allowedRoles={['directrice']} />}>
           <Route element={<DirectriceLayout />}>
             <Route path="/dashboard" element={<DashboardDirectrice />} />
             <Route path="/admin/messages" element={<DirectriceMessages />} />
+            {/* ↓ Added from App.js */}
+            <Route path="/admin/users" element={<GestionComptes />} />
+            <Route path="/admin/dossiers/:id" element={<DetailDossierDirectrice />} />
           </Route>
         </Route>
 
         {/* ── Enseignant ── */}
-        { /* Directrice can also access enseignant routes (Mode Enseignante — F-04) */ }
+        {/* Directrice can also access enseignant routes (Mode Enseignante — F-04) */}
         <Route element={<ProtectedRoute allowedRoles={['enseignant', 'directrice']} />}>
           <Route element={<EnseignantLayout />}>
-            <Route path="/ens/dashboard" element={<div>Enseignant Dashboard</div>} />
+            {/* ↓ Replaced <div> placeholders with real components from App.js */}
+            <Route path="/ens/dashboard" element={<EnseignantDashboard />} />
             <Route path="/ens/dossiers" element={<MesDossiers />} />
-            <Route path="/ens/depot/nouveau" element={<div>Nouveau Dépôt</div>} />
-            <Route path="/ens/dossiers/:id" element={<div>Détail Dossier</div>} />
-            <Route path="/ens/profil" element={<div>Mon Profil</div>} />
+            <Route path="/ens/depot/nouveau" element={<NouveauDepot />} />
+            <Route path="/ens/dossiers/:id" element={<DetailDossierEnseignant />} />
+            <Route path="/ens/profil" element={<MonProfil />} />
           </Route>
         </Route>
 

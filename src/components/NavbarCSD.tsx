@@ -1,33 +1,43 @@
 import { LayoutDashboard, FolderOpen, MessageSquare, ShieldCheck, Eye, CheckCircle2 } from 'lucide-react'
 import BaseNavbar from './BaseNavbar'
-import { useAuth } from '../hooks/useAuth'
-import { useNotificationStore } from '../store/notificationStore'
 import type { CSDRole } from '../types'
 
-// ── Role config ───────────────────────────────────────────────────────────────
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+interface NavbarCSDProps {
+  nomMembre?: string
+  role?: CSDRole
+  departement?: string
+  messagesNonLus?: number
+  dossiersNonTraites?: number
+  onLogout?: () => void
+}
+
+// ── Role config — single source of truth for CSD role display ─────────────────
 
 const ROLE_CONFIG: Record<CSDRole, { label: string; icon: typeof Eye }> = {
   consultation: { label: 'Consultation', icon: Eye },
   validation:   { label: 'Validation',   icon: CheckCircle2 },
 }
 
-// ── Nav items factory — reads badge counts from notification store ─────────────
+// ── Nav config — single source of truth for CSD navigation ───────────────────
 
-function buildNavItems(csdMessagesNonLus: number, dossiersEnAttente: number) {
-  return [
-    { label: 'Tableau de bord',   to: '/csd/dashboard', icon: LayoutDashboard },
-    { label: 'Dossiers assignés', to: '/csd/dossiers',  icon: FolderOpen,     badge: dossiersEnAttente },
-    { label: 'Messages',          to: '/csd/messages',  icon: MessageSquare,  badge: csdMessagesNonLus },
-  ]
-}
+const NAV_ITEMS = (messagesNonLus: number, dossiersNonTraites: number) => [
+  { label: 'Tableau de bord',   to: '/csd/dashboard', icon: LayoutDashboard },
+  { label: 'Dossiers assignés', to: '/csd/dossiers',  icon: FolderOpen,     badge: dossiersNonTraites },
+  { label: 'Messages',          to: '/csd/messages',  icon: MessageSquare,  badge: messagesNonLus },
+]
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export default function NavbarCSD() {
-  const { fullName, user } = useAuth()
-  const { csdMessagesNonLus, dossiersEnAttente } = useNotificationStore()
-
-  const role: CSDRole = user?.csdRole ?? 'consultation'
+export default function NavbarCSD({
+  nomMembre = 'Membre CSD',
+  role = 'consultation',
+  departement,
+  messagesNonLus = 0,
+  dossiersNonTraites = 0,
+  onLogout,
+}: NavbarCSDProps) {
   const roleConfig = ROLE_CONFIG[role]
   const RoleIcon = roleConfig.icon
 
@@ -35,12 +45,13 @@ export default function NavbarCSD() {
     <BaseNavbar
       logoIcon={ShieldCheck}
       logoTitle="Espace CSD"
-      logoSubtitle={user?.departement}
-      navItems={buildNavItems(csdMessagesNonLus, dossiersEnAttente)}
-      displayName={fullName}
+      logoSubtitle={departement}
+      navItems={NAV_ITEMS(messagesNonLus, dossiersNonTraites)}
+      displayName={nomMembre}
       roleLabel={roleConfig.label}
       bgClass="bg-csd"
       activeTextClass="text-csd"
+      onLogout={onLogout}
       rightSlot={
         <div
           className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"

@@ -32,8 +32,8 @@ interface NotificationActions {
 
 export const useNotificationStore = create<NotificationState & NotificationActions>((set) => ({
   // ── Initial state ──────────────────────────────────────────────────────────
-  messagesNonLus: 0,
-  comptesEnAttente: 0,
+  messagesNonLus: 3,
+  comptesEnAttente: 2,
   dossiersEnAttente: 0,
   csdMessagesNonLus: 0,
   isLoaded: false,

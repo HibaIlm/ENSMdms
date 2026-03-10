@@ -18,10 +18,10 @@
 // roles: "enseignant" | "directrice" | "csd"
 export const CURRENT_USER = {
   id: "u001",
-  nom: "Mohamed El Hadj",
-  prenom: "Leila",
-  initiales: "MH",
-  email: "l.mohamedelhadj@ensmanagement.edu.dz",
+  nom: "Ben Moussa",
+  prenom: "Karim",
+  initiales: "BM",
+  email: "k.benmoussa@ensm.dz",
   grade: "Professeur",
   departement: "Management",
   telephone: "+213 555 12 34 56",
@@ -34,10 +34,10 @@ export const CURRENT_USER = {
 // ── Directrice (admin) user ───────────────────────────────────────
 export const DIRECTRICE = {
   id: "u000",
-  nom: "Dr. Directrice",
-  prenom: "",
-  initiales: "DD",
-  email: "direction@ensm.dz",
+  nom: "Mohamed El Hadj",
+  prenom: "Leila",
+  initiales: "MH",
+  email: "l.mohamedelhadj@ensm.dz",
   role: "directrice",
 };
 

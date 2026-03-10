@@ -49,7 +49,7 @@ export default function MesDossiers() {
 
   return (
     <div className="min-h-screen bg-[#F0F7F9]">
-      <NavbarEnseignant nomEnseignant="Dr. Meziane Karim" />
+      <NavbarEnseignant />
 
       <main className="max-w-screen-lg mx-auto px-4 sm:px-6 py-8 space-y-6">
 
